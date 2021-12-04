@@ -1,0 +1,33 @@
+Alejandro Silvério - 2019014309
+Stanley Andrade Senne - 2019010032 
+Vitor Hermeto - 2019003557
+
+perfis e usuários
+
+CREATE ROLE adm;
+CREATE ROLE user_padrao;
+-- cria o perfil
+
+CREATE USER usuario_teste WITH PASSWORD '123456';
+CREATE USER administrador_stocks WITH PASSWORD 'adm';
+
+-- cria usuários
+
+GRANT USAGE ON SCHEMA stocks_data_base TO user_padrao;
+GRANT USAGE ON SCHEMA stocks_data_base TO adm;
+
+--adiciona o perfil no esquema
+
+GRANT SELECT ON ALL TABLES IN SCHEMA stocks_data_base TO user_padrao;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA stocks_data_base TO adm;
+
+
+-- adciona as permissões do perfil no esquema
+
+GRANT user_padrao TO usuario_teste;
+GRANT adm TO administrador_stocks;
+--associa usuario ao perfil
+
+
+//analyse
+explain analyze select * from stocks_data_base.corporation where simbolo in ( select nome from stocks_data_base.informations_economics where nome = 'iRobot Corporation')
